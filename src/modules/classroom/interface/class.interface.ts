@@ -1,19 +1,13 @@
-export interface IClass{
-        id:string,
-        instructor_id:string,
-        student_id:string,
-        qtde_student:number,
-        hour_classroom:string,
-        initial_date:Date,
-        date_final:Date,
-        class_duration:number,
-        type_task:typeTask,
-        created_at:Date,
-        updated_at:Date
-    }
+import { IsString } from "class-validator"
 
-
-    enum typeTask {
-        type1 = 'TYPE1',
-        type2 = 'TYPE2'
+export class CreateStudentDto{
+        instructor_id:string
+        student_id:string
+        type_task_id:string
+        qtde_student:number
+        max_student:number
+        hour_classroom:string
+        initial_date:string
+        final_date:string
+        class_duration:string
     }

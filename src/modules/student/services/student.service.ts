@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, Optional } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import Contact from "src/modules/contact/typeorm/entities/contact.entity";
-import { Repository } from "typeorm";
+import { DataSource, Repository } from "typeorm";
 import { CreateStudentDto } from "../dto/create-student.dto";
 import { UpdatedStudentDto } from "../dto/update-student";
 import { typeStudent } from "../interface/student.interface";
@@ -26,10 +26,13 @@ constructor(
     async create(createStudent: CreateStudentDto):Promise<Students>{
         const { address, birth_day, classes, height, name, phone, type_student, weight } = createStudent
         try {
+            
             const typeStudant = await this.typeStudantRepositorie.findBy({name:type_student})
             if (!typeStudant) {
                 throw new BadRequestException('Tipo de estudante informado inexistente')
             }
+
+            //tentar adicionar transaction
             const contact = await this.contactRepositorie.save({phone:createStudent.phone})
             const createAddress = await this.addressRepositorie.save(address)
             const student = {
@@ -43,6 +46,7 @@ constructor(
                 type_student: typeStudant[0],
                 classes: 1,
             }
+
             const studentCreated = await this.studentRepositorie.save(student)
             return studentCreated
         } catch (error) {

@@ -23,11 +23,11 @@ export default class Students {
     enrollent_code:number
 
     @OneToOne(() => Address, address => address.id)
-    @JoinColumn()
+    @JoinColumn({name:'address'})
     address: Address
 
     @OneToOne(() => Contact, contact => contact.id)
-    @JoinColumn()
+    @JoinColumn({name:'contact'})
     contact:Contact;
 
     @Column()
@@ -40,7 +40,7 @@ export default class Students {
     weight:number;
 
     @OneToOne(() => TypeStudant, typeStudant => typeStudant.id)
-    @JoinColumn()
+    @JoinColumn({name:'type_student'})
     type_student: TypeStudant;
 
     @CreateDateColumn()

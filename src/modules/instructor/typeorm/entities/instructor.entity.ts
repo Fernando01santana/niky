@@ -1,0 +1,31 @@
+import Classes from "src/modules/classroom/typeorm/entities/classes.entities";
+import Contact from "src/modules/contact/typeorm/entities/contact.entity";
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+
+@Entity('instructor')
+export default class Instructor{
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
+
+    @Column()
+    name: string;
+
+    @OneToMany(() => Classes, (classes) => classes.instructor)
+    classes: Classes[]
+
+    @Column()
+    document: string;
+
+    @Column()
+    title: string;
+
+    @OneToOne(() => Contact, contact => contact.id)
+    @JoinColumn()
+    address: Contact
+
+    @CreateDateColumn()
+    created_at: Date;
+
+    @UpdateDateColumn()
+    updated_at: Date;
+}

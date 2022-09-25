@@ -29,8 +29,12 @@ export class student1663986494638 implements MigrationInterface {
                         type: 'uuid',
                     },
                     {
-                        name: 'phone',
-                        type: 'varchar',
+                        name: 'type_student',
+                        type: 'uuid',
+                    },
+                    {
+                        name: 'contact',
+                        type: 'uuid',
                     },
                     {
                         name: 'birth_day',
@@ -41,14 +45,6 @@ export class student1663986494638 implements MigrationInterface {
                         type: 'varchar',
                     },                    {
                         name: 'weight',
-                        type: 'varchar',
-                    },
-                    {
-                        name: 'type_student',
-                        type: 'varchar',
-                    },
-                    {
-                        name: 'classes',
                         type: 'varchar',
                     },
                     {
@@ -64,7 +60,6 @@ export class student1663986494638 implements MigrationInterface {
                 ],
             }),
         );
-
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

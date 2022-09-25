@@ -8,6 +8,8 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
+import TypeStudant from './typeStudant';
+import Contact from 'src/modules/contact/typeorm/entities/contact.entity';
 
 @Entity('student')
 export default class Students {
@@ -18,14 +20,15 @@ export default class Students {
     name: string;
 
     @Column()
-    enrollent_code:string
+    enrollent_code:number
 
     @OneToOne(() => Address, address => address.id)
     @JoinColumn()
     address: Address
 
-    @Column()
-    phone:string;
+    @OneToOne(() => Contact, contact => contact.id)
+    @JoinColumn()
+    contact:Contact;
 
     @Column()
     birth_day:Date;
@@ -36,20 +39,13 @@ export default class Students {
     @Column({type:'real'})
     weight:number;
 
-    @Column()
-    type_student: string;
-
-    @Column()
-    classes: number;
+    @OneToOne(() => TypeStudant, typeStudant => typeStudant.id)
+    @JoinColumn()
+    type_student: TypeStudant;
 
     @CreateDateColumn()
     created_at: Date;
 
     @UpdateDateColumn()
     updated_at: Date;
-}
-
-const typeStudent = {
-    default: 'DEFAULT',
-    monitor: 'MONITOR'
 }

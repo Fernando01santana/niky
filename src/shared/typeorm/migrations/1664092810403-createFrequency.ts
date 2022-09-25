@@ -1,12 +1,12 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm"
 
-export class address1663986544471 implements MigrationInterface {
+export class migrations1664092810403 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: 'address',
-                columns: [
+                name:'frequency',
+                columns:[
                     {
                         name: 'id',
                         type: 'uuid',
@@ -15,24 +15,16 @@ export class address1663986544471 implements MigrationInterface {
                         default: 'uuid_generate_v4()',
                     },
                     {
-                        name: 'street',
-                        type: 'varchar',
+                        name: 'present',
+                        type: 'boolean',
                     },
                     {
-                        name: 'district',
-                        type: 'varchar',
+                        name:'code',
+                        type:'int'
                     },
                     {
-                        name: 'number',
-                        type: 'varchar',
-                    },
-                    {
-                        name: 'city',
-                        type: 'varchar',
-                    },
-                    {
-                        name: 'state',
-                        type: 'varchar',
+                        name: 'student',
+                        type: 'uuid',
                     },
                     {
                         name: 'created_at',
@@ -44,15 +36,15 @@ export class address1663986544471 implements MigrationInterface {
                         type: 'timestamp',
                         default: 'now()',
                     },
-                ],
-            }),
-        );
+                ]
+            })
+        )
 
         await queryRunner.createForeignKey(
-            'student',
+            'frequency',
             new TableForeignKey({
-                columnNames: ['address'],
-                referencedTableName: 'address',
+                columnNames: ['student'],
+                referencedTableName: 'student',
                 referencedColumnNames: ['id'],
                 onDelete: 'CASCADE',
             }),
@@ -60,15 +52,8 @@ export class address1663986544471 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropForeignKey('student','address')
-        await queryRunner.dropTable('address');
-
+        await queryRunner.dropForeignKey('frequency','student')
+        await queryRunner.dropTable('frequency')
     }
 
 }
-
-
-
-
-
-

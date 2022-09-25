@@ -32,6 +32,10 @@ export class migrations1664102164802 implements MigrationInterface {
                         type: 'uuid',
                     },
                     {
+                        name: 'address',
+                        type: 'uuid',
+                    },
+                    {
                         name: 'created_at',
                         type: 'timestamp',
                         default: 'now()',
@@ -50,6 +54,16 @@ export class migrations1664102164802 implements MigrationInterface {
                 new TableForeignKey({
                     columnNames: ['contact'],
                     referencedTableName: 'contact',
+                    referencedColumnNames: ['id'],
+                    onDelete: 'CASCADE',
+                }),
+            )
+
+            await queryRunner.createForeignKey(
+                'instructor',
+                new TableForeignKey({
+                    columnNames: ['address'],
+                    referencedTableName: 'address',
                     referencedColumnNames: ['id'],
                     onDelete: 'CASCADE',
                 }),

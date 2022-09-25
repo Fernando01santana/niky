@@ -1,5 +1,6 @@
 import Classes from "src/modules/classroom/typeorm/entities/classes.entities";
 import Contact from "src/modules/contact/typeorm/entities/contact.entity";
+import Address from "src/modules/student/typeorm/entities/address.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('instructor')
@@ -19,9 +20,13 @@ export default class Instructor{
     @Column()
     title: string;
 
+    @OneToOne(() => Address, address => address.id)
+    @JoinColumn({name:'address'})
+    address: Address
+
     @OneToOne(() => Contact, contact => contact.id)
-    @JoinColumn()
-    address: Contact
+    @JoinColumn({name:'contact'})
+    contact: Contact
 
     @CreateDateColumn()
     created_at: Date;

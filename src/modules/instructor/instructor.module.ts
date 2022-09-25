@@ -9,10 +9,13 @@ import Contact from '../contact/typeorm/entities/contact.entity';
 import Address from '../student/typeorm/entities/address.entity';
 import Students from '../student/typeorm/entities/students.entity';
 import TypeStudant from '../student/typeorm/entities/typeStudant';
+import { InstructorController } from './controllers/instructor.controller';
+import InstructorService from './service/instructor.service';
+import Instructor from './typeorm/entities/instructor.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Classes])],
-    controllers: [],
-    providers: [],
+    imports: [TypeOrmModule.forFeature([Instructor,Contact,Address])],
+    controllers: [InstructorController],
+    providers: [InstructorService],
 })
 export class InstructorModule {}

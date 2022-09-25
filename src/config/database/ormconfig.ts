@@ -1,7 +1,7 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 import Classes from "src/modules/classroom/typeorm/entities/classes.entities";
-import TypeTask from "src/modules/classroom/typeorm/entities/typeTask.entities";
-import Contact from "src/modules/contact/typeorm/entities/contact.entity";
+import TypeTask from "src/modules/typeTask/typeorm/entities/typeTask.entities";
+import Contact from "src/modules/instructor/typeorm/entities/contact.entity";
 import Instructor from "src/modules/instructor/typeorm/entities/instructor.entity";
 import Address from "src/modules/student/typeorm/entities/address.entity";
 import Students from "src/modules/student/typeorm/entities/students.entity";

@@ -1,13 +1,12 @@
 import { IsString } from "class-validator"
 
-export class CreateStudentDto{
-        instructor_id:string
-        student_id:string
-        type_task_id:string
-        qtde_student:number
-        max_student:number
-        hour_classroom:string
-        initial_date:string
-        final_date:string
-        class_duration:string
+export class CreateClassroomtDto{
+    instructor:string
+    typeTask:string
+    qtdeStudent:string
+    maxStudent:string
+    hourClassroom:string
+    initialDate:string
+    finalDate:string
+    classDuration:string
     }

@@ -1,5 +1,5 @@
 import Classes from "src/modules/classroom/typeorm/entities/classes.entities";
-import Contact from "src/modules/contact/typeorm/entities/contact.entity";
+import Contact from "src/modules/instructor/typeorm/entities/contact.entity";
 import Address from "src/modules/student/typeorm/entities/address.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 

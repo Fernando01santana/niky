@@ -6,7 +6,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClassroomModule } from '../classroom/classroom.module';
 import Classes from '../classroom/typeorm/entities/classes.entities';
-import Contact from '../contact/typeorm/entities/contact.entity';
+import Contact from '../instructor/typeorm/entities/contact.entity';
 import { StudentController } from './controllers/student.controller';
 import StudentService from './services/student.service';
 import Address from './typeorm/entities/address.entity';

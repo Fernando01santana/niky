@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, Optional } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import Classes from "src/modules/classroom/typeorm/entities/classes.entities";
-import Contact from "src/modules/contact/typeorm/entities/contact.entity";
+import Contact from "src/modules/instructor/typeorm/entities/contact.entity";
 import { DataSource, Repository } from "typeorm";
 import { CreateStudentDto } from "../dto/create-student.dto";
 import { UpdatedStudentDto } from "../dto/update-student";
@@ -112,5 +112,21 @@ constructor(
         const student = await this.studentRepositorie.findBy({id:id})
         await this.studentRepositorie.remove(student)
         return
+    }
+
+    async vinculeStudent(idStudent:string, idClasses):Promise<Classes>{
+        const student = await this.studentRepositorie.findBy({id:idStudent})
+        if (!student[0]?.id) {
+            throw new BadRequestException("Nenhum aluno encontrado com o tipo informado");
+        }
+
+        const classes = await this.classesRepositorie.findBy({id:idClasses})
+        if (!classes[0]?.id) {
+            throw new BadRequestException("Nenhum classe encontrado com o tipo informado");
+        }
+
+        classes[0].student.push(student[0])
+        const studentVinculed = await this.classesRepositorie.save(classes[0])
+        return studentVinculed
     }
 }

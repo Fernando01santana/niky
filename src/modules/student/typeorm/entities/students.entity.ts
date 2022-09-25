@@ -9,7 +9,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import TypeStudant from './typeStudant';
-import Contact from 'src/modules/contact/typeorm/entities/contact.entity';
+import Contact from 'src/modules/instructor/typeorm/entities/contact.entity';
 
 @Entity('student')
 export default class Students {

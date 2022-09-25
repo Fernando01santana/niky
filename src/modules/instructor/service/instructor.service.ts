@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import Contact from "src/modules/contact/typeorm/entities/contact.entity";
+import Contact from "src/modules/instructor/typeorm/entities/contact.entity";
 import Address from "src/modules/student/typeorm/entities/address.entity";
 import { Repository } from "typeorm";
 import { CreateInstructorDto } from "../dto/create-instructor.dto";

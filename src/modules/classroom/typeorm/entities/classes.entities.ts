@@ -1,7 +1,7 @@
 import Instructor from "src/modules/instructor/typeorm/entities/instructor.entity";
 import Students from "src/modules/student/typeorm/entities/students.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import TypeTask from "./typeTask.entities";
+import TypeTask from "../../../typeTask/typeorm/entities/typeTask.entities";
 
 @Entity('classes')
 export default class Classes{
@@ -11,7 +11,7 @@ export default class Classes{
     @ManyToOne(() => Instructor, (instructor) => instructor.classes)
     instructor: Instructor
 
-    @ManyToMany(() => Students)
+    @ManyToMany(() => Students,{eager:true})
     @JoinTable()
     student: Students[]
 

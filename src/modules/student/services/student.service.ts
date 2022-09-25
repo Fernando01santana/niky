@@ -74,6 +74,7 @@ constructor(
 
         const studentUpdate = await this.studentRepositorie.findBy({id:updatedStudent.id})
         studentUpdate[0].address = address[0]
+        this.studentRepositorie.save(studentUpdate[0])
         return studentUpdate[0]
     }
 

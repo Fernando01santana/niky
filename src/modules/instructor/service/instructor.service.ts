@@ -1,9 +1,10 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import Contact from "src/modules/contact/typeorm/entities/contact.entity";
 import Address from "src/modules/student/typeorm/entities/address.entity";
 import { Repository } from "typeorm";
 import { CreateInstructorDto } from "../dto/create-instructor.dto";
+import { UpdatedInstructorDto } from "../dto/instructor-updated.dto";
 import Instructor from "../typeorm/entities/instructor.entity";
 
 @Injectable()
@@ -31,5 +32,28 @@ export default class InstructorService{
         
         const instructor = await this.instructorRepositorie.save(instructorData)
         return instructor
+        }
+
+        async findAll():Promise<Instructor[]>{
+            return this.instructorRepositorie.find()
+        }
+
+        async update(updatedInstructor:UpdatedInstructorDto):Promise<Instructor>{
+            const searchInstructor = await this.instructorRepositorie.findBy({id:updatedInstructor.id})
+            if (!searchInstructor[0]?.id) {
+                throw new BadRequestException('Nenhum instrutor encontrado')
+            }
+
+        const address = await this.addressRepositorie.save(updatedInstructor.data.address)
+        const createContact = await this.contactRepositorie.save({phone:updatedInstructor.data.contact})
+
+        searchInstructor[0].address = address
+        searchInstructor[0].contact = createContact
+        searchInstructor[0].document = updatedInstructor.data.document
+        searchInstructor[0].name = updatedInstructor.data.name
+        searchInstructor[0].title = updatedInstructor.data.title
+
+        return  this.instructorRepositorie.save(searchInstructor[0])
+
         }
     }

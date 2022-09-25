@@ -31,6 +31,10 @@ export class migrations1664106571464 implements MigrationInterface {
                         type: 'int',
                     },
                     {
+                        name: 'qtde_student',
+                        type: 'int',
+                    },
+                    {
                         name: 'hour_classroom',
                         type: 'timestamp',
                     },

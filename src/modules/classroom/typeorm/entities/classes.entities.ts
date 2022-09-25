@@ -9,6 +9,7 @@ export default class Classes{
     id: string;
 
     @ManyToOne(() => Instructor, (instructor) => instructor.classes)
+    @JoinColumn({name:'instructor'})
     instructor: Instructor
 
     @ManyToMany(() => Students,{eager:true})
@@ -16,7 +17,6 @@ export default class Classes{
     student: Students[]
 
     @OneToOne(() => TypeTask, typetask => typetask.id)
-    @JoinColumn()
     typeTask: TypeTask
 
     @Column()

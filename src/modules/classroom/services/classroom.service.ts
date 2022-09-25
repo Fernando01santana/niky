@@ -22,12 +22,15 @@ export default class ClassroomService{
 
     async create(createClass:CreateClassroomtDto):Promise<Classes>{
         const instructor = await this.instructorRepositorie.findBy({id:createClass.instructor})
-        if (!instructor[0].id) {
+        
+        if (!instructor.length) {
             throw new BadRequestException("Instrutor nao encontrado");
         }
 
         const typeTask = await this.typetaskRepositorie.findBy({name:createClass.typeTask})
-        if (!typeTask[0].id) {
+        console.log(typeTask);
+        
+        if (!typeTask.length) {
             throw new BadRequestException("Tipo de atividade nao encontrado");
         }
         const classe = {
@@ -36,8 +39,8 @@ export default class ClassroomService{
             hour_classroom:new Date(createClass.hourClassroom),
             initial_date:new Date(createClass.initialDate),
             instructor:instructor[0],
-            max_student:Number(createClass.maxStudent),
-            qtde_student:Number(createClass.qtdeStudent),
+            max_student:parseInt(createClass.maxStudent),
+            qtde_student:parseInt(createClass.qtdeStudent),
             student:null,
             typeTask:typeTask[0],
         }

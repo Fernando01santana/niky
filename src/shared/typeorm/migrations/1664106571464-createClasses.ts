@@ -63,16 +63,6 @@ export class migrations1664106571464 implements MigrationInterface {
         await queryRunner.createForeignKey(
             'classes',
             new TableForeignKey({
-                columnNames: ['instructor'],
-                referencedTableName: 'instructor',
-                referencedColumnNames: ['id'],
-                onDelete: 'CASCADE',
-            }),
-        )
-
-        await queryRunner.createForeignKey(
-            'student',
-            new TableForeignKey({
                 columnNames: ['student'],
                 referencedTableName: 'student',
                 referencedColumnNames: ['id'],
@@ -81,14 +71,15 @@ export class migrations1664106571464 implements MigrationInterface {
         )
 
         await queryRunner.createForeignKey(
-            'student',
+            'classes',
             new TableForeignKey({
-                columnNames: ['typeTask'],
-                referencedTableName: 'typeTask',
+                columnNames: ['instructor'],
+                referencedTableName: 'instructor',
                 referencedColumnNames: ['id'],
                 onDelete: 'CASCADE',
             }),
         )
+
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

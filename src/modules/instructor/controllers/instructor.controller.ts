@@ -20,4 +20,27 @@ export class InstructorController{
     async updated(@Body() updatedInstructor:UpdatedInstructorDto):Promise<Instructor>{
         return await this.instructorService.update(updatedInstructor)
     }
+
+    @Get('find')
+    async findAll():Promise<Instructor[]>{
+        return await this.instructorService.findAll()
+    }
+
+    @Get('find/one')
+    async findOne(@Query() id:string):Promise<Instructor>{
+        const result = await this.instructorService.findOne(id)
+        return result
+    }
+
+    @Get('vincule/class')
+    async vinculeClass(@Query() idInstructor:String,idclass:String):Promise<any>{
+        return this.instructorService.vinculeInstructorToClass(idInstructor,idclass)
+    }
+
+    @Delete('remove')
+    async remove(@Query() id:string):Promise<void>{
+        const result = await this.instructorService.remove(id)
+        return result
+    }
+
 }

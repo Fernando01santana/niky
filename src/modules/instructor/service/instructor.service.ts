@@ -38,6 +38,14 @@ export default class InstructorService{
             return this.instructorRepositorie.find()
         }
 
+        async findOne(id:string):Promise<Instructor>{
+            const students = await this.instructorRepositorie.findBy({id:id})
+            if (!students) {
+                throw new BadRequestException("Instrutor especificado nao encontrado");
+            }
+            return students[0]
+        }
+
         async update(updatedInstructor:UpdatedInstructorDto):Promise<Instructor>{
             const searchInstructor = await this.instructorRepositorie.findBy({id:updatedInstructor.id})
             if (!searchInstructor[0]?.id) {
@@ -56,4 +64,12 @@ export default class InstructorService{
         return  this.instructorRepositorie.save(searchInstructor[0])
 
         }
+
+        async remove(id:string):Promise<void>{
+            const instructor = await this.instructorRepositorie.findBy({id:id})
+            await this.instructorRepositorie.remove(instructor)
+            return
+        }
+
+        async vinculeInstructorToClass(idInstructor:String,idClass:String):Promise<void>{}
     }

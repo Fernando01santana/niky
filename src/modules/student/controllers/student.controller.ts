@@ -49,7 +49,6 @@ export class StudentController{
     @Delete('remove')
     async remove(@Query() id:string):Promise<void>{
         const result = await this.studentService.remove(id)
-        console.log(result);
         return result
     }
 }

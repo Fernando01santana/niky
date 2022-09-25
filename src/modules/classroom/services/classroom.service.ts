@@ -28,19 +28,21 @@ export default class ClassroomService{
         }
 
         const typeTask = await this.typetaskRepositorie.findBy({name:createClass.typeTask})
-        console.log(typeTask);
+
         
         if (!typeTask.length) {
             throw new BadRequestException("Tipo de atividade nao encontrado");
         }
+        console.log(new Date().toLocaleTimeString());
+        
         const classe = {
             class_duration:new Date(createClass.classDuration),
             final_date: new Date(createClass.finalDate),
-            hour_classroom:new Date(createClass.hourClassroom),
-            initial_date:new Date(createClass.initialDate),
+            hour_classroom: new Date().toLocaleTimeString(),
+            initial_date: new Date().toLocaleTimeString(),
             instructor:instructor[0],
-            max_student:parseInt(createClass.maxStudent),
-            qtde_student:parseInt(createClass.qtdeStudent),
+            max_student:createClass.maxStudent,
+            qtde_student:createClass.qtdeStudent,
             student:null,
             typeTask:typeTask[0],
         }

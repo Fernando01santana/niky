@@ -14,7 +14,7 @@ import { DataSource } from "typeorm";
     port: 5432,
     username: "postgres",
     password: "",
-    database: "teste2_nick",
+    database: "niky",
     entities: [Address, Students,TypeStudant,Contact,Instructor,Classes,TypeTask],
     migrations: ["dist/shared/typeorm/migrations/*.js"],
     // cli:{migrationsDir:"dist/shared/typeorm/migrations/*.js"},

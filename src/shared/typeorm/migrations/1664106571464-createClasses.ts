@@ -28,15 +28,15 @@ export class migrations1664106571464 implements MigrationInterface {
                     },
                     {
                         name: 'max_student',
-                        type: 'int',
+                        type: 'varchar',
                     },
                     {
                         name: 'qtde_student',
-                        type: 'int',
+                        type: 'varchar',
                     },
                     {
                         name: 'hour_classroom',
-                        type: 'timestamp',
+                        type: 'time',
                     },
                     {
                         name: 'initial_date',
@@ -48,7 +48,7 @@ export class migrations1664106571464 implements MigrationInterface {
                     },
                     {
                         name: 'class_duration',
-                        type: 'date',
+                        type: 'time',
                     },
                     {
                         name: 'created_at',

@@ -30,7 +30,9 @@ constructor(
         const { address, birth_day, classes, height, name, phone, type_student, weight } = createStudent
         try {
             const typeStudant = await this.typeStudantRepositorie.findBy({name:type_student})
-            if (!typeStudant) {
+            console.log(type_student);
+            
+            if (!typeStudant.length) {
                 throw new BadRequestException('Tipo de estudante informado inexistente')
             }
 

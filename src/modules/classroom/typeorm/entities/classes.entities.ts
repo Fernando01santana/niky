@@ -20,10 +20,10 @@ export default class Classes{
     typeTask: TypeTask
 
     @Column()
-    qtde_student:number
+    qtde_student:string
 
     @Column()
-    max_student:number
+    max_student:string
 
     @Column()
     hour_classroom:Date

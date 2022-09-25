@@ -22,11 +22,11 @@ export default class Students {
     @Column()
     enrollent_code:number
 
-    @OneToOne(() => Address, address => address.id)
+    @OneToOne(() => Address, address => address.id,{onDelete:'CASCADE'})
     @JoinColumn({name:'address'})
     address: Address
 
-    @OneToOne(() => Contact, contact => contact.id)
+    @OneToOne(() => Contact, contact => contact.id,{onDelete:'CASCADE'})
     @JoinColumn({name:'contact'})
     contact:Contact;
 
@@ -39,7 +39,7 @@ export default class Students {
     @Column({type:'real'})
     weight:number;
 
-    @OneToOne(() => TypeStudant, typeStudant => typeStudant.id)
+    @OneToOne(() => TypeStudant, typeStudant => typeStudant.id,{eager:true})
     @JoinColumn({name:'type_student'})
     type_student: TypeStudant;
 

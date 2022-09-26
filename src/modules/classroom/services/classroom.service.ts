@@ -52,7 +52,12 @@ export default class ClassroomService{
     }
 
     async findAll():Promise<Classes[]>{
-        return this.classesRepositorie.find()
+        const classes = await this.classesRepositorie.find({
+            relations: {
+                student: true,
+            },
+        })
+        return classes
     }
 
     async update(updatedClasses:UpdateClasses):Promise<Classes>{
@@ -104,7 +109,6 @@ export default class ClassroomService{
         const zonedDate = utcToZonedTime(data, timeZone)
         const pattern = 'yyyy.M.d HH:mm:ss.SSS \'GMT\''
         const output = format(zonedDate, pattern, { timeZone: 'Brazil/East' })
-        console.log(output);
         return output
     }
 }

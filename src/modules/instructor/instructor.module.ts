@@ -14,7 +14,7 @@ import InstructorService from './service/instructor.service';
 import Instructor from './typeorm/entities/instructor.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Instructor,Contact,Address])],
+    imports: [TypeOrmModule.forFeature([Instructor,Contact,Address,Classes])],
     controllers: [InstructorController],
     providers: [InstructorService],
 })

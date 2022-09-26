@@ -17,18 +17,14 @@ export class migrations1664160430863 implements MigrationInterface {
                     {
                         name: 'student',
                         type: 'uuid',
+                        isNullable:true
                     },
-                    {
-                        name: 'present',
-                        type: 'boolean',
-                    },
-                    {
+                    {                        
                         name: 'enrollment_code',
-                        type: 'varchar',
-                    },
-                    {
-                        name: 'frequency_day',
-                        type: 'date',
+                        type: 'int',
+                        isGenerated:true,
+                        generationStrategy:'increment',
+                        default:'increment'
                     },
                     {
                         name: 'created_at',

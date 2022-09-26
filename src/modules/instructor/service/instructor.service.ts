@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import Classes from "src/modules/classroom/typeorm/entities/classes.entities";
 import Contact from "src/modules/instructor/typeorm/entities/contact.entity";
 import Address from "src/modules/student/typeorm/entities/address.entity";
 import { Repository } from "typeorm";
@@ -16,6 +17,8 @@ export default class InstructorService{
         private  contactRepositorie:Repository<Contact>,
         @InjectRepository(Address) 
         private  addressRepositorie:Repository<Address>,
+        @InjectRepository(Classes) 
+        private  classesRepositorie:Repository<Classes>,
     ){}
 
     async create(createInstructor:CreateInstructorDto):Promise<Instructor>{
@@ -71,5 +74,23 @@ export default class InstructorService{
             return
         }
 
-        async vinculeInstructorToClass(idInstructor:String,idClass:String):Promise<void>{}
+        async vinculeInstructorToClass(idInstructor:String,idClass:String):Promise<Instructor>{
+            const classe = await this.classesRepositorie.findBy({id:String(idClass)})
+            if (!classe.length) {
+                throw new BadRequestException("Classe informada nao encontrada");
+            }
+
+            const instructor = await this.instructorRepositorie.findBy({id:String(idInstructor)})
+            if (!instructor.length) {
+                throw new BadRequestException("Instrutor informada nao encontrada");
+            }
+            classe[0].instructor = instructor[0]
+            instructor[0].classes.push(classe[0])
+
+            const instructorVinculed = await this.instructorRepositorie.save(instructor[0])
+            await this.classesRepositorie.save(instructor[0])
+
+            return instructorVinculed
+
+        }
     }

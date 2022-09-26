@@ -7,6 +7,7 @@ import Address from "src/modules/student/typeorm/entities/address.entity";
 import Students from "src/modules/student/typeorm/entities/students.entity";
 import TypeStudant from "src/modules/student/typeorm/entities/typeStudant";
 import { DataSource } from "typeorm";
+import Enrollment from "src/modules/enrollment/typeorm/entities/enrollment.entitie";
 
  const ormConfig = new DataSource({
     type: "postgres",
@@ -14,11 +15,11 @@ import { DataSource } from "typeorm";
     port: 5432,
     username: "postgres",
     password: "",
-    database: "niky",
-    entities: [Address, Students,TypeStudant,Contact,Instructor,Classes,TypeTask],
+    database: "niky10",
+    entities: [Address, Students,TypeStudant,Contact,Instructor,Classes,TypeTask,Enrollment],
     migrations: ["dist/shared/typeorm/migrations/*.js"],
     // cli:{migrationsDir:"dist/shared/typeorm/migrations/*.js"},
-    synchronize: false,
+    synchronize: true,
   })
 
 

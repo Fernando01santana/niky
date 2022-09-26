@@ -19,9 +19,6 @@ export default class Students {
     @Column()
     name: string;
 
-    @Column()
-    enrollent_code:number
-
     @OneToOne(() => Address, address => address.id,{onDelete:'CASCADE'})
     @JoinColumn({name:'address'})
     address: Address

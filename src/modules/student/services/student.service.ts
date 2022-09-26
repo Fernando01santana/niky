@@ -41,7 +41,6 @@ constructor(
             const createAddress = await this.addressRepositorie.save(address)
             const student = {
                 name: name,
-                enrollent_code:1,
                 address:createAddress,
                 contact: contact,
                 birth_day: new Date(birth_day),

@@ -8,11 +8,11 @@ export default class Classes{
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @ManyToOne(() => Instructor, (instructor) => instructor.classes)
+    @ManyToOne(() => Instructor, (instructor) => instructor.classes,{eager:true})
     @JoinColumn({name:'instructor'})
     instructor: Instructor
 
-    @ManyToMany(() => Students,{eager:true,nullable:true})
+    @ManyToMany(() => Students,{nullable:true,cascade: true,eager:true})
     @JoinTable()
     student: Students[]
 

@@ -12,11 +12,12 @@ export default class Classes{
     @JoinColumn({name:'instructor'})
     instructor: Instructor
 
-    @ManyToMany(() => Students,{eager:true})
+    @ManyToMany(() => Students,{eager:true,nullable:true})
     @JoinTable()
     student: Students[]
 
-    @OneToOne(() => TypeTask, typetask => typetask.id)
+    @OneToOne(() => TypeTask, typetask => typetask.id,{eager:true,nullable:true})
+    @JoinColumn({name:'typeTask'})
     typeTask: TypeTask
 
     @Column()
@@ -25,7 +26,7 @@ export default class Classes{
     @Column()
     max_student:string
 
-    @Column()
+    @Column({type:'time'})
     hour_classroom:Date
 
     @Column()
@@ -34,7 +35,7 @@ export default class Classes{
     @Column()
     final_date:Date
 
-    @Column()
+    @Column({type:'time'})
     class_duration:Date
 
     @CreateDateColumn()

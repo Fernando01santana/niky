@@ -1,12 +1,12 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm"
 
-export class migrations1664106571464 implements MigrationInterface {
+export class migrations1664160430863 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: 'classes',
-                columns: [
+                name:'enrollment',
+                columns:[
                     {
                         name: 'id',
                         type: 'uuid',
@@ -15,43 +15,20 @@ export class migrations1664106571464 implements MigrationInterface {
                         default: 'uuid_generate_v4()',
                     },
                     {
-                        name: 'instructor',
-                        type: 'uuid',
-                    },
-                    {
                         name: 'student',
                         type: 'uuid',
-                        isNullable:true
                     },
                     {
-                        name: 'typeTask',
-                        type: 'uuid',
-                        isNullable:true
+                        name: 'present',
+                        type: 'boolean',
                     },
                     {
-                        name: 'max_student',
+                        name: 'enrollment_code',
                         type: 'varchar',
                     },
                     {
-                        name: 'qtde_student',
-                        type: 'varchar',
-                    },
-                    {
-                        name: 'hour_classroom',
-                        type: 'time',
-                        isNullable:true
-                    },
-                    {
-                        name: 'initial_date',
+                        name: 'frequency_day',
                         type: 'date',
-                    },
-                    {
-                        name: 'final_date',
-                        type: 'date',
-                    },
-                    {
-                        name: 'class_duration',
-                        type: 'time',
                     },
                     {
                         name: 'created_at',
@@ -68,7 +45,7 @@ export class migrations1664106571464 implements MigrationInterface {
         )
 
         await queryRunner.createForeignKey(
-            'classes',
+            'enrollment',
             new TableForeignKey({
                 columnNames: ['student'],
                 referencedTableName: 'student',
@@ -76,21 +53,11 @@ export class migrations1664106571464 implements MigrationInterface {
                 onDelete: 'CASCADE',
             }),
         )
-
-        await queryRunner.createForeignKey(
-            'classes',
-            new TableForeignKey({
-                columnNames: ['instructor'],
-                referencedTableName: 'instructor',
-                referencedColumnNames: ['id'],
-                onDelete: 'CASCADE',
-            }),
-        )
-
-    }
+}
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('classes')
+        await queryRunner.dropTable('enrollment')
+
     }
 
 }

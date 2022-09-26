@@ -2,6 +2,8 @@ import { Body, Controller, Delete, Get, Param, Post, Query } from "@nestjs/commo
 import { CreateStudentDto } from "../dto/create-student.dto";
 import { UpdatedStudentDto } from "../dto/update-student";
 import StudentService from "../services/student.service";
+import Students from "../typeorm/entities/students.entity";
+import TypeStudant from "../typeorm/entities/typeStudant";
 
 
 @Controller('students')
@@ -41,9 +43,15 @@ export class StudentController{
     }
 
     @Get('find/students/Class')
-    async findStudantsByClass(@Query() classId:string):Promise<any>{
+    async findStudantsByClass(@Query() classId:string):Promise<Students[]>{
         const result = await this.studentService.findStudantsByClass(classId)
         return result
+    }
+
+    @Get('create/type/student')
+    async createTypeStudent(@Query() type:string):Promise<TypeStudant>{
+        const typeStudent = await this.studentService.createTypeStudent(type)
+        return typeStudent
     }
 
     @Delete('remove')

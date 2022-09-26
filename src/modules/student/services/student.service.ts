@@ -1,7 +1,8 @@
-import { BadRequestException, Injectable, Optional } from "@nestjs/common";
+import {  Injectable, Optional } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import Classes from "src/modules/classroom/typeorm/entities/classes.entities";
 import Contact from "src/modules/instructor/typeorm/entities/contact.entity";
+import AppError from "src/shared/error/AppError";
 import { DataSource, Repository } from "typeorm";
 import { CreateStudentDto } from "../dto/create-student.dto";
 import { UpdatedStudentDto } from "../dto/update-student";
@@ -30,10 +31,9 @@ constructor(
         const { address, birth_day, classes, height, name, phone, type_student, weight } = createStudent
         try {
             const typeStudant = await this.typeStudantRepositorie.findBy({name:type_student})
-            console.log(type_student);
             
             if (!typeStudant.length) {
-                throw new BadRequestException('Tipo de estudante informado inexistente')
+                throw new AppError('Tipo de estudante informado inexistente',401)
             }
 
             //tentar adicionar transaction
@@ -55,7 +55,7 @@ constructor(
         } catch (error) {
             console.log(error);
             
-            throw new BadRequestException(error)
+            throw new AppError(error)
         }
     }
 
@@ -64,7 +64,7 @@ constructor(
         const type_student = await this.typeStudantRepositorie.findBy({name:updatedStudent.data.type_student})
 
         if(!type_student){
-            throw new BadRequestException('Nenhuma atividade encontrada com o nome informado')
+            throw new AppError('Nenhuma atividade encontrada com o nome informado',401)
         }
 
         if(!address){
@@ -72,11 +72,15 @@ constructor(
             updatedStudent.data.address = adressSave
             updatedStudent.data.type_student = type_student[0].name
         }
+        try {
+            const studentUpdate = await this.studentRepositorie.findBy({id:updatedStudent.id})
+            studentUpdate[0].address = address[0]
+            this.studentRepositorie.save(studentUpdate[0])
+            return studentUpdate[0]
+        } catch (error) {
+            throw new AppError('Erro ao salvar estudante: '+error,401)
+        }
 
-        const studentUpdate = await this.studentRepositorie.findBy({id:updatedStudent.id})
-        studentUpdate[0].address = address[0]
-        this.studentRepositorie.save(studentUpdate[0])
-        return studentUpdate[0]
     }
 
     async findAll():Promise<Students[]>{
@@ -86,7 +90,7 @@ constructor(
     async findOne(id:string):Promise<Students>{
         const students = await this.studentRepositorie.findBy({id:id})
         if (!students) {
-            throw new BadRequestException("Estudante especificado nao encontrado");
+            throw new AppError("Estudante especificado nao encontrado",401);
         }
         return students[0]
     }
@@ -94,11 +98,11 @@ constructor(
     async findByTypeStudent(typeStudent:string):Promise<Students>{
         const searchTypeStudent = await this.typeStudantRepositorie.findBy({name:typeStudent})
         if (!searchTypeStudent) {
-            throw new BadRequestException("Tipo de aluno informado nao encontrado");
+            throw new AppError("Tipo de aluno informado nao encontrado");
         }
         const student = await this.studentRepositorie.findBy({type_student:searchTypeStudent})
         if (!student) {
-            throw new BadRequestException("Nenhum aluno encontrado com o tipo informado");
+            throw new AppError("Nenhum aluno encontrado com o tipo informado",401);
         }
         return student[0]
     }
@@ -118,16 +122,24 @@ constructor(
     async vinculeStudent(idStudent:string, idClasses):Promise<Classes>{
         const student = await this.studentRepositorie.findBy({id:idStudent})
         if (!student[0]?.id) {
-            throw new BadRequestException("Nenhum aluno encontrado com o tipo informado");
+            throw new AppError("Nenhum aluno encontrado com o tipo informado");
         }
 
         const classes = await this.classesRepositorie.findBy({id:idClasses})
         if (!classes[0]?.id) {
-            throw new BadRequestException("Nenhum classe encontrado com o tipo informado");
+            throw new AppError("Nenhum classe encontrado com o tipo informado");
         }
+        try {
+            classes[0].student.push(student[0])
+            const studentVinculed = await this.classesRepositorie.save(classes[0])
+            return studentVinculed
+        } catch (error) {
+            throw new AppError("Erro ao vincular estudante a classe: "+error,400);
+        }
+    }
 
-        classes[0].student.push(student[0])
-        const studentVinculed = await this.classesRepositorie.save(classes[0])
-        return studentVinculed
+    async createTypeStudent(type:string):Promise<TypeStudant>{
+        const typeStudent = await this.typeStudantRepositorie.save({name:type})
+        return typeStudent
     }
 }
